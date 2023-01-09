@@ -3,6 +3,8 @@ package owl.home.simpletelegrambot.bot;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -18,9 +20,9 @@ import static owl.home.simpletelegrambot.util.Action.*;
 @Component
 public class GatheringBot extends TelegramLongPollingBot {
     private final Watcher watcher;
-    @Value("${BOT.name}")
+    @Value("${BOT_name}")
     private String botName;
-    @Value("${BOT.token}")
+    @Value("${BOT_token}")
     private String botToken;
 
     @Autowired
