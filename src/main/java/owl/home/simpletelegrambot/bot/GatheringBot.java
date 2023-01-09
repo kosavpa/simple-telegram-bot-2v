@@ -23,7 +23,7 @@ public class GatheringBot extends TelegramLongPollingBot {
     @Autowired
     public GatheringBot(UpdateHandler updateHandler) {
         super();
-        this.updateHandler = this.updateHandler;
+        this.updateHandler = updateHandler;
     }
 
     @Override
