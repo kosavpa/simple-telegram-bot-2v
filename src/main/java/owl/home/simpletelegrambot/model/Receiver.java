@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode
 @AllArgsConstructor
-public class People {
+public class Receiver {
     private Long id;
     private String username;
     private String firstName;

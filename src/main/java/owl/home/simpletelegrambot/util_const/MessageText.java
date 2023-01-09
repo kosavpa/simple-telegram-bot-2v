@@ -1,10 +1,9 @@
-package owl.home.simpletelegrambot.util;
+package owl.home.simpletelegrambot.util_const;
 
 public enum MessageText {
     ASSEMBLE("Avengers, assemble!"),
-    BOT_URL("https://t.me/GeneralGathering_bot"),
     INFO("""
-            1. Перейдите по ссылке и запустите меня.
+            1. Перейдите по ссылке (https://t.me/GeneralGathering_bot) и запустите меня.
             2. Введите команду /register.
             3. Все готово, для общего сбора вводите команду /assemble.
             """),

@@ -1,20 +1,24 @@
 package owl.home.simpletelegrambot.model;
 
+
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
 
+
 public class Postman {
-    private List<People> peopleList;
+    @Getter
+    private List<Receiver> receiverList;
+    @Getter
     private String text;
     @Getter @Setter
     private boolean group = false;
     @Getter @Setter
     private boolean haveActive = false;
 
-    public Postman setPeoples(List<People> peoples) {
-        this.peopleList = peoples;
+    public Postman setReceiver(List<Receiver> receivers) {
+        this.receiverList = receivers;
 
         return this;
     }

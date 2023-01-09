@@ -5,11 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import owl.home.simpletelegrambot.model.People;
+import owl.home.simpletelegrambot.model.Receiver;
 import owl.home.simpletelegrambot.model.Postman;
-import owl.home.simpletelegrambot.util.CommandType;
-import owl.home.simpletelegrambot.util.MessageText;
-import owl.home.simpletelegrambot.util.UpdateType;
+import owl.home.simpletelegrambot.util_const.CommandType;
+import owl.home.simpletelegrambot.util_const.MessageText;
+import owl.home.simpletelegrambot.util_const.UpdateType;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class UpdateHandler {
         this.watcher = watcher;
     }
 
-    public Postman handleAndAnswerUpdate(Update update){
+    public Postman handleAndGetPostman(Update update){
         switch (defineType(update)){
             case MESSAGE -> {
                 return handleMessage(update);
@@ -41,10 +41,13 @@ public class UpdateHandler {
         Postman postman = new Postman();
 
         if(update.hasMyChatMember() & update.getMyChatMember().getNewChatMember().getStatus().equals(CommandType.NEW_MEMBER.getCommand())) {
+            postman.setReceiver(List.of(
+                    Receiver.builder()
+                            .id(update.getMyChatMember().getChat().getId())
+                            .build()));
             postman.setHaveActive(true);
-            postman.setText(MessageText.BOT_URL.getText());
-            postman.setText(MessageText.INFO.getText());
             postman.setGroup(true);
+            postman.setText(MessageText.INFO.getText());
 
             return postman;
         }
@@ -68,7 +71,7 @@ public class UpdateHandler {
     }
 
     private void generalGathering(Postman postman, Message message) {
-        postman.setPeoples(watcher.getPeoplesByChatId(message.getChatId()));
+        postman.setReceiver(watcher.getReceiversByChatId(message.getChatId()));
         postman.setText(MessageText.ASSEMBLE.getText());
         postman.setHaveActive(true);
     }
@@ -86,15 +89,15 @@ public class UpdateHandler {
     }
 
     private void registerNewPeople(Postman postman, Message message) {
-        People people = People.builder()
+        Receiver receiver = Receiver.builder()
                 .id(message.getFrom().getId())
                 .firstName(message.getFrom().getFirstName())
                 .lastName(message.getFrom().getLastName())
                 .username(message.getFrom().getUserName())
                 .build();
 
-        watcher.addPeopleByChatId(message.getChatId(), people);
-        postman.setPeoples(List.of(people));
+        watcher.addReceiverByChatId(message.getChatId(), receiver);
+        postman.setReceiver(List.of(receiver));
         postman.setText(MessageText.REGISTERED.getText());
         postman.setHaveActive(true);
     }
