@@ -1,4 +1,4 @@
-package owl.home.simpletelegrambot.util;
+package owl.home.simpletelegrambot.message_manager;
 
 
 import org.springframework.stereotype.Component;
